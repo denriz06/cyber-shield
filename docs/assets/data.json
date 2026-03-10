@@ -1,0 +1,512 @@
+{
+  "threats": [
+    {
+      "id": 0,
+      "name": "SQL Injection",
+      "score": 72,
+      "type": "Web Attack",
+      "origin": "External",
+      "impact": "Data breach"
+    },
+    {
+      "id": 1,
+      "name": "DDoS Attack",
+      "score": 95,
+      "type": "Network Attack",
+      "origin": "Botnet",
+      "impact": "Service down"
+    },
+    {
+      "id": 2,
+      "name": "Phishing",
+      "score": 48,
+      "type": "Social Eng.",
+      "origin": "Email",
+      "impact": "Credential theft"
+    },
+    {
+      "id": 3,
+      "name": "Ransomware",
+      "score": 88,
+      "type": "Malware",
+      "origin": "Download",
+      "impact": "Data encrypted"
+    },
+    {
+      "id": 4,
+      "name": "Zero-Day Exploit",
+      "score": 99,
+      "type": "Exploit",
+      "origin": "Unknown",
+      "impact": "Full compromise"
+    },
+    {
+      "id": 5,
+      "name": "Man-in-Middle",
+      "score": 61,
+      "type": "Network Attack",
+      "origin": "LAN",
+      "impact": "Data intercept"
+    },
+    {
+      "id": 6,
+      "name": "Brute Force",
+      "score": 35,
+      "type": "Auth Attack",
+      "origin": "External",
+      "impact": "Unauthorized access"
+    },
+    {
+      "id": 7,
+      "name": "Malware",
+      "score": 83,
+      "type": "Malware",
+      "origin": "USB/Web",
+      "impact": "System damage"
+    }
+  ],
+  "sequential_search": {
+    "algorithm": "Sequential Search",
+    "contoh": 3,
+    "n": 8,
+    "input": [
+      72,
+      95,
+      48,
+      88,
+      99,
+      61,
+      35,
+      83
+    ],
+    "target": 88,
+    "found": true,
+    "result_index": 3,
+    "result_name": "Ransomware",
+    "steps": [
+      {
+        "step_no": 1,
+        "index": 0,
+        "value": 72,
+        "target": 88,
+        "matched": false
+      },
+      {
+        "step_no": 2,
+        "index": 1,
+        "value": 95,
+        "target": 88,
+        "matched": false
+      },
+      {
+        "step_no": 3,
+        "index": 2,
+        "value": 48,
+        "target": 88,
+        "matched": false
+      },
+      {
+        "step_no": 4,
+        "index": 3,
+        "value": 88,
+        "target": 88,
+        "matched": true
+      }
+    ],
+    "comparisons": 4,
+    "complexity": {
+      "t_min": 1,
+      "t_max": 8,
+      "t_avg": 4.5,
+      "big_o": "O(n)",
+      "note": "Berlaku untuk data tidak terurut maupun terurut"
+    },
+    "performance": {
+      "time_ms": 0.01087,
+      "memory_current_kb": 0.2812,
+      "memory_peak_kb": 0.2812
+    }
+  },
+  "selection_sort": {
+    "algorithm": "Selection Sort",
+    "contoh": 4,
+    "n": 8,
+    "input": [
+      72,
+      95,
+      48,
+      88,
+      99,
+      61,
+      35,
+      83
+    ],
+    "output": [
+      35,
+      48,
+      61,
+      72,
+      83,
+      88,
+      95,
+      99
+    ],
+    "sorted_threats": [
+      {
+        "rank": 1,
+        "score": 35,
+        "name": "Brute Force",
+        "type": "Auth Attack",
+        "level": "RENDAH",
+        "response": "Monitor pasif"
+      },
+      {
+        "rank": 2,
+        "score": 48,
+        "name": "Phishing",
+        "type": "Social Eng.",
+        "level": "RENDAH",
+        "response": "Catat & awasi"
+      },
+      {
+        "rank": 3,
+        "score": 61,
+        "name": "Man-in-Middle",
+        "type": "Network Attack",
+        "level": "SEDANG",
+        "response": "Patch segera"
+      },
+      {
+        "rank": 4,
+        "score": 72,
+        "name": "SQL Injection",
+        "type": "Web Attack",
+        "level": "TINGGI",
+        "response": "Isolasi subnet"
+      },
+      {
+        "rank": 5,
+        "score": 83,
+        "name": "Malware",
+        "type": "Malware",
+        "level": "TINGGI",
+        "response": "Incident response"
+      },
+      {
+        "rank": 6,
+        "score": 88,
+        "name": "Ransomware",
+        "type": "Malware",
+        "level": "TINGGI",
+        "response": "Tim CSIRT aktif"
+      },
+      {
+        "rank": 7,
+        "score": 95,
+        "name": "DDoS Attack",
+        "type": "Network Attack",
+        "level": "KRITIS",
+        "response": "Shutdown layanan"
+      },
+      {
+        "rank": 8,
+        "score": 99,
+        "name": "Zero-Day Exploit",
+        "type": "Exploit",
+        "level": "KRITIS",
+        "response": "LOCKDOWN ABSOLUT"
+      }
+    ],
+    "passes": [
+      {
+        "pass": 1,
+        "min_found_at": 6,
+        "min_value": 35,
+        "swapped": true,
+        "snapshot": [
+          35,
+          95,
+          48,
+          88,
+          99,
+          61,
+          72,
+          83
+        ],
+        "cmp_this_pass": 7
+      },
+      {
+        "pass": 2,
+        "min_found_at": 2,
+        "min_value": 48,
+        "swapped": true,
+        "snapshot": [
+          35,
+          48,
+          95,
+          88,
+          99,
+          61,
+          72,
+          83
+        ],
+        "cmp_this_pass": 6
+      },
+      {
+        "pass": 3,
+        "min_found_at": 5,
+        "min_value": 61,
+        "swapped": true,
+        "snapshot": [
+          35,
+          48,
+          61,
+          88,
+          99,
+          95,
+          72,
+          83
+        ],
+        "cmp_this_pass": 5
+      },
+      {
+        "pass": 4,
+        "min_found_at": 6,
+        "min_value": 72,
+        "swapped": true,
+        "snapshot": [
+          35,
+          48,
+          61,
+          72,
+          99,
+          95,
+          88,
+          83
+        ],
+        "cmp_this_pass": 4
+      },
+      {
+        "pass": 5,
+        "min_found_at": 7,
+        "min_value": 83,
+        "swapped": true,
+        "snapshot": [
+          35,
+          48,
+          61,
+          72,
+          83,
+          95,
+          88,
+          99
+        ],
+        "cmp_this_pass": 3
+      },
+      {
+        "pass": 6,
+        "min_found_at": 6,
+        "min_value": 88,
+        "swapped": true,
+        "snapshot": [
+          35,
+          48,
+          61,
+          72,
+          83,
+          88,
+          95,
+          99
+        ],
+        "cmp_this_pass": 2
+      },
+      {
+        "pass": 7,
+        "min_found_at": 6,
+        "min_value": 95,
+        "swapped": false,
+        "snapshot": [
+          35,
+          48,
+          61,
+          72,
+          83,
+          88,
+          95,
+          99
+        ],
+        "cmp_this_pass": 1
+      }
+    ],
+    "comparisons": 28,
+    "swaps": 6,
+    "complexity": {
+      "cmp_formula": "n(n-1)/2 = 8×7/2 = 28",
+      "swap_formula": "≤ n-1 = 7",
+      "big_o": "O(n²)",
+      "note": "Jumlah perbandingan SAMA untuk best & worst case"
+    },
+    "performance": {
+      "time_ms": 21.241915,
+      "memory_current_kb": 2.1094,
+      "memory_peak_kb": 2.1484
+    }
+  },
+  "bubble_sort": {
+    "algorithm": "Bubble Sort",
+    "contoh": 5,
+    "n": 8,
+    "input": [
+      72,
+      95,
+      48,
+      88,
+      99,
+      61,
+      35,
+      83
+    ],
+    "output": [
+      35,
+      48,
+      61,
+      72,
+      83,
+      88,
+      95,
+      99
+    ],
+    "passes": [
+      {
+        "pass": 1,
+        "i_value": 7,
+        "swaps_this_pass": 5,
+        "cmp_this_pass": 7,
+        "snapshot": [
+          72,
+          48,
+          88,
+          95,
+          61,
+          35,
+          83,
+          99
+        ]
+      },
+      {
+        "pass": 2,
+        "i_value": 6,
+        "swaps_this_pass": 4,
+        "cmp_this_pass": 6,
+        "snapshot": [
+          48,
+          72,
+          88,
+          61,
+          35,
+          83,
+          95,
+          99
+        ]
+      },
+      {
+        "pass": 3,
+        "i_value": 5,
+        "swaps_this_pass": 3,
+        "cmp_this_pass": 5,
+        "snapshot": [
+          48,
+          72,
+          61,
+          35,
+          83,
+          88,
+          95,
+          99
+        ]
+      },
+      {
+        "pass": 4,
+        "i_value": 4,
+        "swaps_this_pass": 2,
+        "cmp_this_pass": 4,
+        "snapshot": [
+          48,
+          61,
+          35,
+          72,
+          83,
+          88,
+          95,
+          99
+        ]
+      },
+      {
+        "pass": 5,
+        "i_value": 3,
+        "swaps_this_pass": 1,
+        "cmp_this_pass": 3,
+        "snapshot": [
+          48,
+          35,
+          61,
+          72,
+          83,
+          88,
+          95,
+          99
+        ]
+      },
+      {
+        "pass": 6,
+        "i_value": 2,
+        "swaps_this_pass": 1,
+        "cmp_this_pass": 2,
+        "snapshot": [
+          35,
+          48,
+          61,
+          72,
+          83,
+          88,
+          95,
+          99
+        ]
+      },
+      {
+        "pass": 7,
+        "i_value": 1,
+        "swaps_this_pass": 0,
+        "cmp_this_pass": 1,
+        "snapshot": [
+          35,
+          48,
+          61,
+          72,
+          83,
+          88,
+          95,
+          99
+        ]
+      }
+    ],
+    "comparisons": 28,
+    "swaps": 16,
+    "complexity": {
+      "cmp_formula": "n(n-1)/2 = 8×7/2 = 28",
+      "swap_min": "T_min(n) = 0  (data sudah terurut)",
+      "swap_max": "T_max(n) = n(n-1)/2 = 28",
+      "big_o": "O(n²)",
+      "note": "Data ini: 16 swap — Selection Sort hanya 6 swap (lebih boros!)"
+    },
+    "performance": {
+      "time_ms": 0.025288,
+      "memory_current_kb": 0.9375,
+      "memory_peak_kb": 0.9766
+    }
+  },
+  "comparison": {
+    "fastest_time_ms": 0.01087,
+    "swap_sel_vs_bub": "Selection=6 vs Bubble=16 — Bubble 2.7× lebih boros"
+  }
+}

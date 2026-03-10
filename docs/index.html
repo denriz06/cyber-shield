@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Tugas Algoritma & Kompleksitas — UNBIN — Sequential Search, Selection Sort, Bubble Sort — Cyber Security Theme"/>
+  <title>CYBER SHIELD · Algoritma & Kompleksitas · UNBIN</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡</text></svg>"/>
+</head>
+<body>
+
+<div id="bg-grid"></div>
+<div id="bg-vignette"></div>
+<div id="bg-scan"></div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     HEADER
+══════════════════════════════════════════════════════════════ -->
+<header id="header">
+  <div class="hdr-hex">🛡</div>
+  <div>
+    <div class="hdr-title">CYBER SHIELD</div>
+    <div class="hdr-sub">ALGORITHMS &amp; COMPLEXITY · UNBIN · LIS UTARI · 3 SKS</div>
+  </div>
+  <div class="hdr-right">
+    <div class="live-dot"></div>
+    <div class="hdr-badge">SYSTEM ONLINE</div>
+    <div id="clock">--:--:--</div>
+  </div>
+</header>
+
+<!-- ══════════════════════════════════════════════════════════════
+     TABS
+══════════════════════════════════════════════════════════════ -->
+<nav id="tabs">
+  <div class="tab on"  onclick="switchTab(0)"><span class="tab-pip"></span><span class="tab-num">C-3</span>SEQUENTIAL SEARCH</div>
+  <div class="tab"     onclick="switchTab(1)"><span class="tab-pip"></span><span class="tab-num">C-4</span>SELECTION SORT</div>
+  <div class="tab"     onclick="switchTab(2)"><span class="tab-pip"></span><span class="tab-num">C-5</span>BUBBLE SORT</div>
+  <div class="tab"     onclick="switchTab(3)"><span class="tab-pip"></span>SUMMARY</div>
+</nav>
+
+<!-- ══════════════════════════════════════════════════════════════
+     MAIN
+══════════════════════════════════════════════════════════════ -->
+<div id="main">
+
+<!-- ────────────────────────────────────────────────────────────
+     SECTION 0 · SEQUENTIAL SEARCH
+──────────────────────────────────────────────────────────── -->
+<div class="section on" id="sec0">
+
+  <div class="sec-hdr">
+    <div class="sec-n">03</div>
+    <div class="sec-txt">
+      <h2>SEQUENTIAL SEARCH — CYBER THREAT DETECTION</h2>
+      <p>Pencarian sekuensial: membandingkan setiap elemen satu per satu dari indeks 0 hingga ditemukan atau habis. Bekerja pada data <b>tidak terurut</b> maupun terurut.</p>
+      <div class="badges">
+        <span class="badge" style="color:var(--green)">T_MIN = 1</span>
+        <span class="badge" style="color:var(--red)">T_MAX = n</span>
+        <span class="badge" style="color:var(--gold)">T_AVG = (n+1)/2</span>
+        <span class="badge" style="color:var(--blue)">BIG-O = O(n)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dataset + Flowchart -->
+  <div class="g2 mb">
+
+    <div class="panel">
+      <div class="ptitle">DATABASE ANCAMAN SIBER — n = 8</div>
+      <table class="tbl">
+        <thead><tr><th>IDX</th><th>ANCAMAN</th><th>TIPE</th><th>ORIGIN</th><th>SKOR BAHAYA</th><th>LEVEL</th><th>DAMPAK</th></tr></thead>
+        <tbody id="raw-tbody"></tbody>
+      </table>
+    </div>
+
+    <div class="panel">
+      <div class="ptitle">FLOWCHART — SEQUENTIAL SEARCH</div>
+      <div class="fc">
+        <div class="fc-node fc-ok fc-pill">START</div>
+        <div class="fc-arr"></div>
+        <div class="fc-node fc-proc">Input: data[ ], target</div>
+        <div class="fc-arr"></div>
+        <div class="fc-node fc-proc">i ← 0 &nbsp;|&nbsp; ketemu ← False</div>
+        <div class="fc-arr"></div>
+        <div class="fc-node fc-diam">not ketemu AND i &lt; N ?</div>
+        <div class="fc-arr"></div>
+        <div class="fc-node fc-diam">data[i] == target ?</div>
+        <div class="fc-arr"></div>
+        <div class="fc-fork">
+          <div class="fc-fcol">
+            <span class="fc-lbl">YA</span>
+            <div class="fc-node fc-ok" style="min-width:148px">ketemu ← True</div>
+          </div>
+          <div class="fc-fcol">
+            <span class="fc-lbl">TIDAK</span>
+            <div class="fc-node fc-proc" style="min-width:148px">i ← i + 1 ↩ loop</div>
+          </div>
+        </div>
+        <div class="fc-arr"></div>
+        <div class="fc-fork">
+          <div class="fc-fcol"><div class="fc-node fc-ok"  style="min-width:138px">return i<br>(DITEMUKAN)</div></div>
+          <div class="fc-fcol"><div class="fc-node fc-err" style="min-width:138px">return −1<br>(TIDAK ADA)</div></div>
+        </div>
+        <div class="fc-arr"></div>
+        <div class="fc-node fc-ok fc-pill">END</div>
+      </div>
+    </div>
+
+  </div><!-- /g2 -->
+
+  <!-- Interactive Search -->
+  <div class="panel p-green mb">
+    <div class="ptitle g">▶ JALANKAN PENCARIAN INTERAKTIF</div>
+    <div class="inp-row">
+      <input class="inp" type="number" id="search-target" placeholder="Masukkan skor target (1–100)" value="88" min="1" max="100"/>
+      <button class="btn g" onclick="runSearch()">▶ EXECUTE</button>
+      <button class="btn b" onclick="resetSearch()">↺ RESET</button>
+    </div>
+    <div class="search-track" id="search-track"></div>
+    <div id="search-result"></div>
+    <div class="metrics" id="search-metrics"></div>
+  </div>
+
+  <!-- Program Python -->
+  <div class="panel mb">
+    <div class="ptitle">PROGRAM — PYTHON · algorithms.py</div>
+    <div class="code-wrap">
+      <div class="code-header">
+        <div class="code-dots"><span class="c-d1"></span><span class="c-d2"></span><span class="c-d3"></span></div>
+        <div class="code-fname">backend/algorithms.py · sequential_search()</div>
+      </div>
+      <div class="code-body">
+<span class="kw">import</span> time, tracemalloc<br><br>
+<span class="kw">def</span> <span class="fn">sequential_search</span>(data: list, target: <span class="cl">int</span>) -&gt; <span class="cl">dict</span>:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">"""</span><br>
+<span class="cm">    Pseudocode (Lis Utari):</span><br>
+<span class="cm">        i      ← 0</span><br>
+<span class="cm">        ketemu ← false</span><br>
+<span class="cm">        while (not ketemu) and (i &lt; N) do</span><br>
+<span class="cm">            if data[i] == target then  ketemu ← true</span><br>
+<span class="cm">            else                       i ← i + 1</span><br>
+<span class="cm">        return i  if ketemu  else  -1</span><br>
+<span class="cm">    </span><br>
+<span class="cm">    T_min = 1  |  T_max = n  |  T_avg = (n+1)/2  |  O(n)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">"""</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;tracemalloc.<span class="fn">start</span>()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;t_start <span class="op">=</span> time.<span class="fn">perf_counter</span>()<br><br>
+&nbsp;&nbsp;&nbsp;&nbsp;i, ketemu <span class="op">=</span> <span class="nm">0</span>, <span class="kw">False</span><br><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">while</span> (<span class="kw">not</span> ketemu) <span class="kw">and</span> (i <span class="op">&lt;</span> <span class="fn">len</span>(data)):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">if</span> data[i] <span class="op">==</span> target:  ketemu <span class="op">=</span> <span class="kw">True</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">else</span>:                  i <span class="op">+=</span> <span class="nm">1</span><br><br>
+&nbsp;&nbsp;&nbsp;&nbsp;t_end <span class="op">=</span> time.<span class="fn">perf_counter</span>()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cur_mem, peak_mem <span class="op">=</span> tracemalloc.<span class="fn">get_traced_memory</span>()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;tracemalloc.<span class="fn">stop</span>()<br><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">return</span> {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="st">"index"</span>:      i <span class="kw">if</span> ketemu <span class="kw">else</span> <span class="op">-</span><span class="nm">1</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="st">"found"</span>:      ketemu,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="st">"time_ms"</span>:    (t_end <span class="op">-</span> t_start) <span class="op">*</span> <span class="nm">1000</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="st">"memory_kb"</span>:  peak_mem <span class="op">/</span> <span class="nm">1024</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}
+      </div>
+    </div>
+  </div>
+
+  <!-- Terminal -->
+  <div class="panel">
+    <div class="ptitle">OUTPUT — TERMINAL</div>
+    <div class="term">
+      <div class="term-hdr">⬛ PYTHON 3.12 · backend/algorithms.py</div>
+      <div class="term-body">
+        <div class="t-pr">$ python3 algorithms.py</div>
+        <div class="t-ou">  CONTOH 3 — Sequential Search</div>
+        <div class="t-ou">  Data input  : [72, 95, 48, 88, 99, 61, 35, 83]</div>
+        <div class="t-ou">  Target cari : skor 88 (Ransomware)</div>
+        <div class="t-st">  Langkah 1: data[0] = 72 ≠ 88</div>
+        <div class="t-st">  Langkah 2: data[1] = 95 ≠ 88</div>
+        <div class="t-st">  Langkah 3: data[2] = 48 ≠ 88</div>
+        <div class="t-ou" style="color:var(--green)">  Langkah 4: data[3] = 88 ✓ KETEMU!</div>
+        <div class="t-re">  ✔  Ditemukan: Ransomware (skor 88) pada indeks [3]</div>
+        <div class="t-re">  ✔  Jumlah perbandingan : 4</div>
+        <div class="t-in">  T_min(n)=1  |  T_max(n)=8  |  T_avg(n)=(8+1)/2=4.5</div>
+        <div class="t-in">  ⏱  Waktu eksekusi  : 0.019378 ms</div>
+        <div class="t-in">  💾  Memory current  : 0.0547 KB  |  Peak: 0.0781 KB</div>
+        <div class="t-in">  Big-O              : O(n)</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /sec0 -->
+
+
+<!-- ────────────────────────────────────────────────────────────
+     SECTION 1 · SELECTION SORT
+──────────────────────────────────────────────────────────── -->
+<div class="section" id="sec1">
+
+  <div class="sec-hdr">
+    <div class="sec-n" style="color:var(--purple)">04</div>
+    <div class="sec-txt">
+      <h2 style="color:var(--purple);text-shadow:0 0 14px #c04cff55">SELECTION SORT — THREAT PRIORITIZATION</h2>
+      <p>Mengurutkan ancaman dari skor terendah ke tertinggi untuk menentukan urutan prioritas respons keamanan siber.</p>
+      <div class="badges">
+        <span class="badge" style="color:var(--purple)">CMP = n(n-1)/2 = 28</span>
+        <span class="badge" style="color:var(--purple)">SWAP ≤ n-1 = 7</span>
+        <span class="badge" style="color:var(--purple)">BIG-O = O(n²)</span>
+        <span class="badge" style="color:var(--gold)">BEST = WORST (perbandingan)</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="g2 mb">
+
+    <div class="panel p-purple">
+      <div class="ptitle p">VISUALISASI ANIMASI</div>
+      <div class="sort-stage" id="sel-stage"></div>
+      <div style="display:flex;gap:2px;justify-content:center;flex-wrap:wrap;margin-top:6px" id="sel-vrow"></div>
+      <div class="pass-row">
+        <div class="pass-item"><span class="pass-lbl">PASS</span><span class="pass-val" id="sel-pass" style="color:var(--purple)">0 / 7</span></div>
+        <div class="pass-item"><span class="pass-lbl">PERBANDINGAN</span><span class="pass-val" id="sel-cmp" style="color:var(--gold)">0</span></div>
+        <div class="pass-item"><span class="pass-lbl">PERTUKARAN</span><span class="pass-val" id="sel-swap" style="color:var(--green)">0</span></div>
+        <div class="pass-item"><span class="pass-lbl">FORMULA</span><span class="pass-val" style="color:var(--gray);font-size:.7rem">n(n-1)/2=28</span></div>
+      </div>
+      <div class="btn-row">
+        <button class="btn p" onclick="startSelSort()">▶ JALANKAN</button>
+        <button class="btn b" onclick="resetSelSort()">↺ RESET</button>
+      </div>
+    </div>
+
+    <div class="panel p-purple">
+      <div class="ptitle p">FLOWCHART — SELECTION SORT</div>
+      <div class="fc">
+        <div class="fc-node fc-ok fc-pill">START</div>
+        <div class="fc-arr"></div>
+        <div class="fc-node fc-pur">Input: data[n]</div>
+        <div class="fc-arr"></div>
+        <div class="fc-node fc-pur">i ← 1 (to n-1)</div>
+        <div class="fc-arr"></div>
+        <div class="fc-node fc-diam">i ≤ n − 1 ?</div>
+        <div class="fc-arr"></div>
+        <div class="fc-node fc-pur">imin ← i &nbsp;|&nbsp; j ← i+1</div>
+        <div class="fc-arr"></div>
+        <div class="fc-node fc-diam">j ≤ n ?</div>
+        <div class="fc-arr"></div>
+        <div class="fc-fork">
+          <div class="fc-fcol">
+            <span class="fc-lbl">a[j] &lt; a[imin]</span>
+            <div class="fc-node fc-pur" style="min-width:142px;font-size:.67rem">imin ← j<br>j ← j+1</div>
+          </div>
+          <div class="fc-fcol">
+            <span class="fc-lbl">TIDAK</span>
+            <div class="fc-node fc-pur" style="min-width:120px;font-size:.67rem">j ← j+1</div>
+          </div>
+        </div>
+        <div class="fc-arr"></div>
+        <div class="fc-node fc-ok" style="font-size:.68rem">swap(a[i], a[imin]) · i ← i+1 ↩</div>
+        <div class="fc-arr"></div>
+        <div class="fc-node fc-ok fc-pill">END · sorted[]</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Result Table -->
+  <div class="panel p-purple mb">
+    <div class="ptitle p">HASIL TERURUT — PRIORITAS RESPONS KEAMANAN</div>
+    <table class="tbl">
+      <thead><tr><th>RANK</th><th>ANCAMAN</th><th>TIPE</th><th>SKOR BAHAYA</th><th>LEVEL</th><th>PRIORITAS RESPONS</th></tr></thead>
+      <tbody id="sel-result-tbody"></tbody>
+    </table>
+  </div>
+
+  <!-- Code -->
+  <div class="panel mb">
+    <div class="ptitle p">PROGRAM — PYTHON · algorithms.py</div>
+    <div class="code-wrap">
+      <div class="code-header">
+        <div class="code-dots"><span class="c-d1"></span><span class="c-d2"></span><span class="c-d3"></span></div>
+        <div class="code-fname">backend/algorithms.py · selection_sort()</div>
+      </div>
+      <div class="code-body">
+<span class="kw">def</span> <span class="fn">selection_sort</span>(data_in: list) -&gt; <span class="cl">dict</span>:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">"""</span><br>
+<span class="cm">    Pseudocode (Lis Utari):</span><br>
+<span class="cm">        for i ← 1 to n-1 do</span><br>
+<span class="cm">            imin ← i</span><br>
+<span class="cm">            for j ← i+1 to n do</span><br>
+<span class="cm">                if a[j] &lt; a[imin] then  imin ← j</span><br>
+<span class="cm">            swap(a[i], a[imin])</span><br>
+<span class="cm">    </span><br>
+<span class="cm">    Cmp: n(n-1)/2 (SAMA untuk best & worst) | Swap: ≤ n-1 | O(n²)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">"""</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;data <span class="op">=</span> data_in[:]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;n    <span class="op">=</span> <span class="fn">len</span>(data)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cmp, swap <span class="op">=</span> <span class="nm">0</span>, <span class="nm">0</span><br><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(n <span class="op">-</span> <span class="nm">1</span>):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;imin <span class="op">=</span> i<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">for</span> j <span class="kw">in</span> <span class="fn">range</span>(i <span class="op">+</span> <span class="nm">1</span>, n):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cmp <span class="op">+=</span> <span class="nm">1</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">if</span> data[j] <span class="op">&lt;</span> data[imin]:  imin <span class="op">=</span> j<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">if</span> imin <span class="op">!=</span> i:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data[i], data[imin] <span class="op">=</span> data[imin], data[i]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;swap <span class="op">+=</span> <span class="nm">1</span><br><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">return</span> data, cmp, swap
+      </div>
+    </div>
+  </div>
+
+  <!-- Terminal -->
+  <div class="panel">
+    <div class="ptitle p">OUTPUT — TERMINAL</div>
+    <div class="term">
+      <div class="term-hdr">⬛ PYTHON 3.12 · backend/algorithms.py · SELECTION SORT</div>
+      <div class="term-body">
+        <div class="t-pr">$ python3 algorithms.py</div>
+        <div class="t-ou">  Input  : [72, 95, 48, 88, 99, 61, 35, 83]</div>
+        <div class="t-st">  Pass  1: [7 cmp | swap idx[0]↔[6]] → [35, 95, 48, 88, 99, 61, 72, 83]</div>
+        <div class="t-st">  Pass  2: [6 cmp | swap idx[1]↔[2]] → [35, 48, 95, 88, 99, 61, 72, 83]</div>
+        <div class="t-st">  Pass  3: [5 cmp | swap idx[2]↔[5]] → [35, 48, 61, 88, 99, 95, 72, 83]</div>
+        <div class="t-st">  Pass  4: [4 cmp | swap idx[3]↔[6]] → [35, 48, 61, 72, 99, 95, 88, 83]</div>
+        <div class="t-st">  Pass  5: [3 cmp | swap idx[4]↔[7]] → [35, 48, 61, 72, 83, 95, 88, 99]</div>
+        <div class="t-st">  Pass  6: [2 cmp | swap idx[5]↔[6]] → [35, 48, 61, 72, 83, 88, 95, 99]</div>
+        <div class="t-st">  Pass  7: [1 cmp | no swap]          → [35, 48, 61, 72, 83, 88, 95, 99] ✓</div>
+        <div class="t-re">  Output : [35, 48, 61, 72, 83, 88, 95, 99]</div>
+        <div class="t-in">  Perbandingan : 28  =  n(n-1)/2 = 8×7/2 = 28 ✓</div>
+        <div class="t-in">  Pertukaran   : 6   ≤  n-1 = 7 ✓</div>
+        <div class="t-in">  T(n) = n(n-1)/2 — berlaku untuk BEST &amp; WORST CASE</div>
+        <div class="t-in">  ⏱  Waktu : 0.035056 ms  |  💾 Mem Peak : 0.6875 KB</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /sec1 -->
+
+
+<!-- ────────────────────────────────────────────────────────────
+     SECTION 2 · BUBBLE SORT
+──────────────────────────────────────────────────────────── -->
+<div class="section" id="sec2">
+
+  <div class="sec-hdr">
+    <div class="sec-n" style="color:var(--red)">05</div>
+    <div class="sec-txt">
+      <h2 style="color:var(--red);text-shadow:0 0 14px #ff295255">BUBBLE SORT — THREAT RISK RANKING</h2>
+      <p>Pengurutan gelembung: membandingkan elemen berdekatan, tukar jika salah urut. Nilai besar "mengapung" ke akhir tiap pass.</p>
+      <div class="badges">
+        <span class="badge" style="color:var(--green)">SWAP_MIN = 0</span>
+        <span class="badge" style="color:var(--red)">SWAP_MAX = n(n-1)/2</span>
+        <span class="badge" style="color:var(--red)">LEBIH BOROS SWAP vs SEL-SORT</span>
+        <span class="badge" style="color:var(--red)">BIG-O = O(n²)</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="g2 mb">
+
+    <div class="panel p-red">
+      <div class="ptitle r">VISUALISASI ANIMASI</div>
+      <div class="sort-stage" id="bub-stage"></div>
+      <div style="display:flex;gap:2px;justify-content:center;flex-wrap:wrap;margin-top:6px" id="bub-vrow"></div>
+      <div class="pass-row">
+        <div class="pass-item"><span class="pass-lbl">PASS</span><span class="pass-val" id="bub-pass" style="color:var(--red)">0 / 7</span></div>
+        <div class="pass-item"><span class="pass-lbl">PERBANDINGAN</span><span class="pass-val" id="bub-cmp" style="color:var(--gold)">0</span></div>
+        <div class="pass-item"><span class="pass-lbl">PERTUKARAN</span><span class="pass-val" id="bub-swap" style="color:var(--red)">0</span></div>
+        <div class="pass-item"><span class="pass-lbl">MAX SWAP</span><span class="pass-val" style="color:var(--gray);font-size:.7rem">n(n-1)/2=28</span></div>
+      </div>
+      <div class="btn-row">
+        <button class="btn r" onclick="startBubSort()">▶ JALANKAN</button>
+        <button class="btn b" onclick="resetBubSort()">↺ RESET</button>
+      </div>
+    </div>
+
+    <div class="panel p-red">
+      <div class="ptitle r">FLOWCHART — BUBBLE SORT</div>
+      <div class="fc">
+        <div class="fc-node fc-ok fc-pill">START</div>
+        <div class="fc-arr"></div>
+        <div class="fc-node fc-red">Input: data[n]</div>
+        <div class="fc-arr"></div>
+        <div class="fc-node fc-red">i ← n-1 (downto 1)</div>
+        <div class="fc-arr"></div>
+        <div class="fc-node fc-diam">i ≥ 1 ?</div>
+        <div class="fc-arr"></div>
+        <div class="fc-node fc-red">j ← 1 to i</div>
+        <div class="fc-arr"></div>
+        <div class="fc-node fc-diam">data[j] &lt; data[j-1] ?</div>
+        <div class="fc-arr"></div>
+        <div class="fc-fork">
+          <div class="fc-fcol">
+            <span class="fc-lbl">YA</span>
+            <div class="fc-node fc-ok" style="min-width:148px;font-size:.68rem">swap(data[j], data[j-1])</div>
+          </div>
+          <div class="fc-fcol">
+            <span class="fc-lbl">TIDAK</span>
+            <div class="fc-node fc-red" style="min-width:120px;font-size:.68rem">j ← j+1</div>
+          </div>
+        </div>
+        <div class="fc-arr"></div>
+        <div class="fc-node fc-red">i ← i-1 ↩ loop</div>
+        <div class="fc-arr"></div>
+        <div class="fc-node fc-ok fc-pill">END · sorted[]</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Perbandingan Bubble vs Selection -->
+  <div class="panel p-gold mb">
+    <div class="ptitle go">PERBANDINGAN — BUBBLE SORT vs SELECTION SORT</div>
+    <table class="ctbl">
+      <thead><tr><th>METRIK</th><th>BUBBLE SORT</th><th>SELECTION SORT</th><th>KESIMPULAN</th></tr></thead>
+      <tbody>
+        <tr><td>Perbandingan (best)</td><td style="color:var(--red);font-family:var(--display)">n(n-1)/2 = 28</td><td style="color:var(--purple);font-family:var(--display)">n(n-1)/2 = 28</td><td style="color:var(--gold)">Sama</td></tr>
+        <tr><td>Swap (best case)</td><td style="color:var(--green);font-family:var(--display)">T_min = 0</td><td style="color:var(--purple);font-family:var(--display)">n-1 = 7</td><td style="color:var(--green)">🏆 Bubble lebih baik</td></tr>
+        <tr><td>Swap (worst case)</td><td style="color:var(--red);font-family:var(--display)">n(n-1)/2 = 28</td><td style="color:var(--purple);font-family:var(--display)">n-1 = 7</td><td style="color:var(--red)">⚠ Selection lebih baik</td></tr>
+        <tr><td>Swap aktual (data ini)</td><td style="color:var(--red);font-family:var(--display)">16 swap</td><td style="color:var(--purple);font-family:var(--display)">6 swap</td><td style="color:var(--red)">⚠ Bubble 2.7× lebih boros</td></tr>
+        <tr><td>Kompleksitas waktu</td><td style="font-family:var(--display)">O(n²)</td><td style="font-family:var(--display)">O(n²)</td><td style="color:var(--gold)">Sama</td></tr>
+        <tr><td>Stabilitas</td><td style="color:var(--red)">Tidak stabil</td><td style="color:var(--red)">Tidak stabil</td><td style="color:var(--gold)">Sama</td></tr>
+        <tr><td>Waktu eksekusi</td><td style="font-family:var(--display)">0.023043 ms</td><td style="font-family:var(--display)">0.035056 ms</td><td style="color:var(--green)">🏆 Bubble lebih cepat</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Code -->
+  <div class="panel mb">
+    <div class="ptitle r">PROGRAM — PYTHON · algorithms.py</div>
+    <div class="code-wrap">
+      <div class="code-header">
+        <div class="code-dots"><span class="c-d1"></span><span class="c-d2"></span><span class="c-d3"></span></div>
+        <div class="code-fname">backend/algorithms.py · bubble_sort()</div>
+      </div>
+      <div class="code-body">
+<span class="kw">def</span> <span class="fn">bubble_sort</span>(data_in: list) -&gt; <span class="cl">dict</span>:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">"""</span><br>
+<span class="cm">    Pseudocode (Lis Utari):</span><br>
+<span class="cm">        for i ← n-1 downto 1 do</span><br>
+<span class="cm">            for j ← 1 to i do</span><br>
+<span class="cm">                if a[j+1] &lt; a[j] then swap(a[j], a[j+1])</span><br>
+<span class="cm">    </span><br>
+<span class="cm">    Cmp: n(n-1)/2  |  Swap_min=0  Swap_max=n(n-1)/2  |  O(n²)</span><br>
+<span class="cm">    ⚠ LEBIH BOROS swap dibanding Selection Sort!</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">"""</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;data <span class="op">=</span> data_in[:]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;n    <span class="op">=</span> <span class="fn">len</span>(data)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cmp, swap <span class="op">=</span> <span class="nm">0</span>, <span class="nm">0</span><br><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(n <span class="op">-</span> <span class="nm">1</span>, <span class="nm">0</span>, <span class="op">-</span><span class="nm">1</span>):   <span class="cm"># i = n-1 downto 1</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">for</span> j <span class="kw">in</span> <span class="fn">range</span>(<span class="nm">1</span>, i <span class="op">+</span> <span class="nm">1</span>):       <span class="cm"># j = 1 to i</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cmp <span class="op">+=</span> <span class="nm">1</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">if</span> data[j] <span class="op">&lt;</span> data[j <span class="op">-</span> <span class="nm">1</span>]:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data[j], data[j<span class="op">-</span><span class="nm">1</span>] <span class="op">=</span> data[j<span class="op">-</span><span class="nm">1</span>], data[j]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;swap <span class="op">+=</span> <span class="nm">1</span><br><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">return</span> data, cmp, swap
+      </div>
+    </div>
+  </div>
+
+  <!-- Terminal -->
+  <div class="panel">
+    <div class="ptitle r">OUTPUT — TERMINAL</div>
+    <div class="term">
+      <div class="term-hdr">⬛ PYTHON 3.12 · backend/algorithms.py · BUBBLE SORT</div>
+      <div class="term-body">
+        <div class="t-pr">$ python3 algorithms.py</div>
+        <div class="t-ou">  Input  : [72, 95, 48, 88, 99, 61, 35, 83]</div>
+        <div class="t-st">  Pass 1 (i=7): 7 cmp | 5 swap → [72, 48, 88, 95, 61, 35, 83, 99]</div>
+        <div class="t-st">  Pass 2 (i=6): 6 cmp | 4 swap → [48, 72, 88, 61, 35, 83, 95, 99]</div>
+        <div class="t-st">  Pass 3 (i=5): 5 cmp | 3 swap → [48, 72, 61, 35, 83, 88, 95, 99]</div>
+        <div class="t-st">  Pass 4 (i=4): 4 cmp | 2 swap → [48, 61, 35, 72, 83, 88, 95, 99]</div>
+        <div class="t-st">  Pass 5 (i=3): 3 cmp | 1 swap → [48, 35, 61, 72, 83, 88, 95, 99]</div>
+        <div class="t-st">  Pass 6 (i=2): 2 cmp | 1 swap → [35, 48, 61, 72, 83, 88, 95, 99]</div>
+        <div class="t-st">  Pass 7 (i=1): 1 cmp | 0 swap → [35, 48, 61, 72, 83, 88, 95, 99] ✓</div>
+        <div class="t-re">  Output : [35, 48, 61, 72, 83, 88, 95, 99]</div>
+        <div class="t-in">  Perbandingan : 28 = n(n-1)/2 ✓</div>
+        <div class="t-wa">  Pertukaran   : 16  ← Selection Sort hanya 6! (Bubble 2.7× lebih boros)</div>
+        <div class="t-in">  T_min=0 swap  |  T_max=n(n-1)/2=28</div>
+        <div class="t-in">  ⏱  Waktu : 0.023043 ms  |  💾 Mem Peak : 0.6875 KB</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /sec2 -->
+
+
+<!-- ────────────────────────────────────────────────────────────
+     SECTION 3 · SUMMARY
+──────────────────────────────────────────────────────────── -->
+<div class="section" id="sec3">
+
+  <div class="sec-hdr">
+    <div class="sec-n" style="color:var(--gold)">∑</div>
+    <div class="sec-txt">
+      <h2 style="color:var(--gold)">SUMMARY — KOMPLEKSITAS WAKTU &amp; MEMORI</h2>
+      <p>Perbandingan ketiga algoritma · n = 8 data ancaman siber · Diukur dengan Python <code>tracemalloc</code> &amp; <code>perf_counter</code></p>
+    </div>
+  </div>
+
+  <!-- Summary Table -->
+  <div class="panel p-gold mb">
+    <div class="ptitle go">TABEL KOMPLEKSITAS LENGKAP</div>
+    <table class="ctbl">
+      <thead><tr><th>ALGORITMA</th><th>TEMA</th><th>T_MIN</th><th>T_MAX</th><th>T_AVG</th><th>CMP AKTUAL</th><th>SWAP AKTUAL</th><th>TIME (ms)</th><th>MEM PEAK (KB)</th><th>BIG-O</th></tr></thead>
+      <tbody>
+        <tr>
+          <td style="color:var(--blue);font-family:var(--display)">Sequential Search</td>
+          <td style="color:var(--gray)">Threat Detection</td>
+          <td style="color:var(--green);font-family:var(--display)">1</td>
+          <td style="color:var(--red);font-family:var(--display)">n = 8</td>
+          <td style="color:var(--gold);font-family:var(--display)">(n+1)/2=4.5</td>
+          <td style="font-family:var(--display)">4</td>
+          <td style="color:var(--gray)">—</td>
+          <td style="color:var(--green);font-family:var(--display)">0.019378</td>
+          <td style="color:var(--green);font-family:var(--display)">0.0781</td>
+          <td style="color:var(--blue);font-family:var(--display)">O(n)</td>
+        </tr>
+        <tr>
+          <td style="color:var(--purple);font-family:var(--display)">Selection Sort</td>
+          <td style="color:var(--gray)">Threat Priority</td>
+          <td style="color:var(--purple);font-family:var(--display)">n(n-1)/2</td>
+          <td style="color:var(--purple);font-family:var(--display)">n(n-1)/2</td>
+          <td style="color:var(--gold);font-family:var(--display)">O(n²)</td>
+          <td style="font-family:var(--display)">28</td>
+          <td style="color:var(--green);font-family:var(--display)">6</td>
+          <td style="color:var(--red);font-family:var(--display)">0.035056</td>
+          <td style="color:var(--red);font-family:var(--display)">0.6875</td>
+          <td style="color:var(--purple);font-family:var(--display)">O(n²)</td>
+        </tr>
+        <tr>
+          <td style="color:var(--red);font-family:var(--display)">Bubble Sort</td>
+          <td style="color:var(--gray)">Risk Ranking</td>
+          <td style="color:var(--green);font-family:var(--display)">0 swap</td>
+          <td style="color:var(--red);font-family:var(--display)">n(n-1)/2</td>
+          <td style="color:var(--gold);font-family:var(--display)">O(n²)</td>
+          <td style="font-family:var(--display)">28</td>
+          <td style="color:var(--red);font-family:var(--display)">16</td>
+          <td style="font-family:var(--display)">0.023043</td>
+          <td style="font-family:var(--display)">0.6875</td>
+          <td style="color:var(--red);font-family:var(--display)">O(n²)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Charts -->
+  <div class="g2 mb">
+    <div class="panel"><div class="ptitle go">WAKTU EKSEKUSI (ms)</div><div class="chart-wrap"><canvas id="chart-time" height="230"></canvas></div></div>
+    <div class="panel"><div class="ptitle go">MEMORY PEAK (KB)</div><div class="chart-wrap"><canvas id="chart-mem" height="230"></canvas></div></div>
+  </div>
+
+  <!-- Formula Cards -->
+  <div class="g3 mb">
+    <div class="panel">
+      <div class="ptitle">SEQUENTIAL SEARCH</div>
+      <div class="fcard">
+        <div class="fcard-big" style="color:var(--green)">T_min = 1</div>
+        <div class="fcard-big" style="color:var(--red)">T_max = n</div>
+        <div class="fcard-big" style="color:var(--gold)">T_avg = (n+1)/2</div>
+        <div class="fcard-sub">Big-O: <span style="color:var(--blue)">O(n)</span></div>
+      </div>
+    </div>
+    <div class="panel p-purple">
+      <div class="ptitle p">SELECTION SORT</div>
+      <div class="fcard">
+        <div class="fcard-big" style="color:var(--purple)">Cmp = n(n-1)/2</div>
+        <div class="fcard-big" style="color:var(--purple)">Swap ≤ n-1</div>
+        <div class="fcard-big" style="color:var(--gold)">Best = Worst</div>
+        <div class="fcard-sub">Big-O: <span style="color:var(--purple)">O(n²)</span></div>
+      </div>
+    </div>
+    <div class="panel p-red">
+      <div class="ptitle r">BUBBLE SORT</div>
+      <div class="fcard">
+        <div class="fcard-big" style="color:var(--green)">Swap_min = 0</div>
+        <div class="fcard-big" style="color:var(--red)">Swap_max = n(n-1)/2</div>
+        <div class="fcard-big" style="color:var(--red)">Boros Swap!</div>
+        <div class="fcard-sub">Big-O: <span style="color:var(--red)">O(n²)</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Kesimpulan -->
+  <div class="panel p-cyan">
+    <div class="ptitle cy">KESIMPULAN AKHIR</div>
+    <table class="ctbl">
+      <thead><tr><th>ASPEK</th><th>PALING EFISIEN</th><th>CATATAN</th></tr></thead>
+      <tbody>
+        <tr><td>Waktu eksekusi tercepat</td><td style="color:var(--blue)">Sequential Search (0.019 ms)</td><td style="color:var(--gray)">Hanya 4 langkah (target di indeks 3)</td></tr>
+        <tr><td>Jumlah swap terkecil</td><td style="color:var(--purple)">Selection Sort (6 swap)</td><td style="color:var(--gray)">Selalu ≤ n-1 pertukaran</td></tr>
+        <tr><td>Memory paling hemat</td><td style="color:var(--blue)">Sequential Search (0.078 KB)</td><td style="color:var(--gray)">Tidak perlu array tambahan</td></tr>
+        <tr><td>Kompleksitas terendah</td><td style="color:var(--blue)">Sequential Search — O(n)</td><td style="color:var(--gray)">Kedua sort sama-sama O(n²)</td></tr>
+        <tr><td>Bubble vs Selection (swap)</td><td style="color:var(--purple)">Selection Sort (6 &lt;&lt; 16)</td><td style="color:var(--red)">Bubble 2.7× lebih boros pertukaran</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div><!-- /sec3 -->
+
+</div><!-- /#main -->
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════════════════════════ -->
+<footer id="footer">
+  <div class="foot-l">
+    Universitas Binaniaga Indonesia (UNBIN) &nbsp;·&nbsp;
+    Algoritma &amp; Kompleksitas — 3 SKS &nbsp;·&nbsp;
+    Dosen: <b style="color:var(--white)">Lis Utari</b>
+  </div>
+  <div class="foot-r">
+    Tema: Cyber Security Defense System &nbsp;·&nbsp;
+    Backend: Python 3 &nbsp;·&nbsp;
+    <a class="foot-a" href="https://github.com" target="_blank">View on GitHub</a>
+  </div>
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+</html>
