@@ -205,7 +205,7 @@ window.runSearch = () => {
       }
       metEl.innerHTML = `
         <div class="metric"><div class="metric-val" style="color:var(--gold)">${steps}</div><div class="metric-lbl">LANGKAH</div></div>
-        <div class="metric"><div class="metric-val" style="color:${found?'var(--green)':'var(--red)'}">${found?idx:−1}</div><div class="metric-lbl">INDEKS HASIL</div></div>
+        <div class="metric"><div class="metric-val" style="color:${found?'var(--green)':'var(--red)'}">${found?idx:-1}</div><div class="metric-lbl">INDEKS HASIL</div></div>
         <div class="metric"><div class="metric-val" style="color:var(--blue)">${ms} ms</div><div class="metric-lbl">WAKTU EKSEKUSI</div></div>
         <div class="metric"><div class="metric-val" style="color:var(--green)">1</div><div class="metric-lbl">T_MIN</div></div>
         <div class="metric"><div class="metric-val" style="color:var(--red)">${n}</div><div class="metric-lbl">T_MAX</div></div>
