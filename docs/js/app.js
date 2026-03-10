@@ -367,7 +367,7 @@ function drawBar(id, labels, vals, colors, unit) {
   cv.width = W; cv.height = H;
   const ctx = cv.getContext('2d');
 
-  ctx.fillStyle='#060f1e'; ctx.fillRect(0,0,W,H);
+  ctx.fillStyle='#0a1018'; ctx.fillRect(0,0,W,H);
 
   const pad={top:28,right:20,bottom:54,left:76};
   const cW=W-pad.left-pad.right, cH=H-pad.top-pad.bottom;
@@ -379,9 +379,9 @@ function drawBar(id, labels, vals, colors, unit) {
   for(let k=0;k<=4;k++){
     const y=pad.top+cH-(k/4)*cH;
     const v=(maxV*k/4);
-    ctx.strokeStyle='#0d2a4a';ctx.lineWidth=1;
+    ctx.strokeStyle='#1e3448';ctx.lineWidth=1;
     ctx.beginPath();ctx.moveTo(pad.left,y);ctx.lineTo(W-pad.right,y);ctx.stroke();
-    ctx.fillStyle='#4a6480';ctx.font=`10px 'Share Tech Mono',monospace`;ctx.textAlign='right';
+    ctx.fillStyle='#5a7a8a';ctx.font=`10px 'Share Tech Mono',monospace`;ctx.textAlign='right';
     ctx.fillText(unit==='ms'?v.toFixed(4):v.toFixed(3),pad.left-6,y+4);
   }
 
@@ -400,25 +400,25 @@ function drawBar(id, labels, vals, colors, unit) {
     ctx.fill(); ctx.shadowBlur=0;
     ctx.strokeStyle=colors[i];ctx.lineWidth=1;ctx.stroke();
     // top label
-    ctx.fillStyle='#d8eaf8';ctx.font=`bold 9.5px 'Share Tech Mono',monospace`;ctx.textAlign='center';
+    ctx.fillStyle='#ece8e1';ctx.font=`bold 9.5px 'Share Tech Mono',monospace`;ctx.textAlign='center';
     ctx.fillText(unit==='ms'?v.toFixed(5):v.toFixed(4),x+bW/2,y-7);
     // x label
-    ctx.fillStyle='#4a6480';ctx.font=`9px 'Share Tech Mono',monospace`;
+    ctx.fillStyle='#5a7a8a';ctx.font=`9px 'Share Tech Mono',monospace`;
     ctx.fillText(labels[i],x+bW/2,H-pad.bottom+16);
   });
 
   // Axis lines
-  ctx.strokeStyle='#1a3f60';ctx.lineWidth=1;
+  ctx.strokeStyle='#2a4560';ctx.lineWidth=1;
   ctx.beginPath();ctx.moveTo(pad.left,pad.top);ctx.lineTo(pad.left,pad.top+cH);ctx.lineTo(W-pad.right,pad.top+cH);ctx.stroke();
 
-  ctx.fillStyle='#4a6480';ctx.font=`9px 'Share Tech Mono',monospace`;ctx.textAlign='left';
+  ctx.fillStyle='#5a7a8a';ctx.font=`9px 'Share Tech Mono',monospace`;ctx.textAlign='left';
   ctx.fillText(unit,3,pad.top+5);
 }
 
 function drawCharts() {
   if (!DATA) return;
   const labels=['Seq Search','Sel Sort','Bub Sort'];
-  const colors=['#00c8ff','#c04cff','#ff2952'];
+  const colors=['#ff4655','#00bcd4','#f5c518'];
   drawBar('chart-time', labels,
     [DATA.sequential_search.performance.time_ms, DATA.selection_sort.performance.time_ms, DATA.bubble_sort.performance.time_ms],
     colors, 'ms');
