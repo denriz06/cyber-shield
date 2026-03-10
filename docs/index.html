@@ -1,240 +1,523 @@
-/* ================================================================
-   CYBER SHIELD — Valorant-Vibes Stylesheet
-   Tema: Tactical FPS UI — sharp edges, red accent, military clean
-   ================================================================ */
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CYBER SHIELD · Algoritma & Kompleksitas · UNBIN</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡</text></svg>"/>
+</head>
+<body>
 
-@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Bebas+Neue&family=DM+Mono:wght@400;500&display=swap');
+<div id="bg-layer"></div>
+<div id="bg-noise"></div>
 
-:root {
-  --bg:       #0f1923;
-  --bg2:      #14212e;
-  --bg3:      #1a2c3d;
-  --bg4:      #0a1018;
-  --border:   #1e3448;
-  --border2:  #2a4560;
-  --red:      #ff4655;
-  --red2:     #cc2233;
-  --red-dim:  #3d1018;
-  --white:    #ece8e1;
-  --white2:   #b0a898;
-  --gray:     #5a7a8a;
-  --gray2:    #3a5060;
-  --teal:     #00bcd4;
-  --yellow:   #f5c518;
-  --green:    #5cb85c;
-  --glow-r:   0 0 20px #ff465533;
-  --glow-t:   0 0 20px #00bcd433;
-  --mono:    'DM Mono', monospace;
-  --display: 'Bebas Neue', sans-serif;
-  --body:    'Rajdhani', sans-serif;
-  --r: 2px;
-  --t: .15s ease;
-}
+<!-- HEADER -->
+<header id="header">
+  <div class="hdr-logo">
+    <div class="hdr-hex">🛡</div>
+    <div>
+      <div class="hdr-title">CYBER SHIELD</div>
+      <div class="hdr-sub">ALGORITHMS &amp; COMPLEXITY · UNBIN · LIS UTARI · 3 SKS</div>
+    </div>
+  </div>
+  <div class="hdr-right">
+    <div class="hdr-live"><div class="live-pip"></div>LIVE</div>
+    <div class="hdr-tag">SYSTEM ONLINE</div>
+    <div id="clock">--:--:--</div>
+    <!-- THEME TOGGLE -->
+    <button id="theme-toggle" onclick="toggleTheme()" title="Toggle Dark / Light Theme" aria-label="Toggle theme">
+      <span class="toggle-icon toggle-moon">🌙</span>
+      <span class="toggle-icon toggle-sun">☀️</span>
+    </button>
+  </div>
+</header>
 
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{background:var(--bg4);color:var(--white);font-family:var(--body);min-height:100vh;overflow-x:hidden;font-size:16px}
-::-webkit-scrollbar{width:4px;height:4px}
-::-webkit-scrollbar-track{background:var(--bg4)}
-::-webkit-scrollbar-thumb{background:var(--red);border-radius:0}
+<!-- TABS -->
+<nav id="tabs">
+  <div class="tab on" onclick="switchTab(0)"><span class="tab-pip"></span><span class="tab-num">C-3</span>SEQUENTIAL SEARCH</div>
+  <div class="tab"    onclick="switchTab(1)"><span class="tab-pip"></span><span class="tab-num">C-4</span>SELECTION SORT</div>
+  <div class="tab"    onclick="switchTab(2)"><span class="tab-pip"></span><span class="tab-num">C-5</span>BUBBLE SORT</div>
+  <div class="tab"    onclick="switchTab(3)"><span class="tab-pip"></span>SUMMARY</div>
+</nav>
 
-/* BG */
-#bg-layer{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
-#bg-layer::before{content:'';position:absolute;top:-200px;right:-100px;width:600px;height:800px;background:repeating-linear-gradient(-55deg,transparent,transparent 18px,rgba(255,70,85,.025) 18px,rgba(255,70,85,.025) 19px)}
-#bg-layer::after{content:'';position:absolute;bottom:0;left:0;width:400px;height:3px;background:linear-gradient(90deg,var(--red),transparent)}
-#bg-noise{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.03;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:200px}
+<div id="main">
 
-/* HEADER */
-#header{position:sticky;top:0;z-index:200;height:60px;background:var(--bg4);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 40px;gap:20px}
-#header::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--red)}
-.hdr-logo{display:flex;align-items:center;gap:14px}
-.hdr-slash{font-family:var(--display);font-size:2rem;color:var(--red);line-height:1;letter-spacing:-2px;user-select:none}
-.hdr-title{font-family:var(--display);font-size:1.5rem;letter-spacing:4px;color:var(--white);line-height:1}
-.hdr-sub{font-family:var(--body);font-size:.68rem;color:var(--gray);letter-spacing:1.5px;margin-top:2px;text-transform:uppercase}
-.hdr-right{margin-left:auto;display:flex;align-items:center;gap:16px}
-.hdr-live{display:flex;align-items:center;gap:7px;font-family:var(--body);font-size:.72rem;color:var(--white2);letter-spacing:1.5px;text-transform:uppercase}
-.live-pip{width:7px;height:7px;border-radius:50%;background:var(--red);animation:pipBlink 1.8s ease-in-out infinite}
-@keyframes pipBlink{0%,100%{opacity:1}50%{opacity:.2}}
-#clock{font-family:var(--mono);font-size:.8rem;color:var(--red);letter-spacing:2px}
-.hdr-tag{padding:4px 12px;border:1px solid var(--red);font-family:var(--body);font-size:.68rem;color:var(--red);letter-spacing:2px;text-transform:uppercase;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);background:var(--red-dim)}
+<!-- ══ SECTION 0 · SEQUENTIAL SEARCH ══ -->
+<div class="section on" id="sec0">
+  <div class="sec-hdr">
+    <div class="sec-n">03</div>
+    <div class="sec-txt">
+      <h2>SEQUENTIAL SEARCH — <span>CYBER THREAT DETECTION</span></h2>
+      <p>Pencarian sekuensial: membandingkan setiap elemen satu per satu dari indeks 0 hingga ditemukan atau habis. Bekerja pada data <b>tidak terurut</b> maupun terurut.</p>
+      <div class="badges">
+        <span class="badge" style="color:var(--green)">T_MIN = 1</span>
+        <span class="badge" style="color:var(--red)">T_MAX = n</span>
+        <span class="badge" style="color:var(--gold)">T_AVG = (n+1)/2</span>
+        <span class="badge" style="color:var(--blue)">BIG-O = O(n)</span>
+      </div>
+    </div>
+  </div>
 
-/* TABS */
-#tabs{position:sticky;top:60px;z-index:199;background:var(--bg);border-bottom:2px solid var(--border);display:flex;padding:0 40px;overflow-x:auto;gap:0}
-#tabs::-webkit-scrollbar{height:0}
-.tab{height:48px;padding:0 28px;display:flex;align-items:center;gap:10px;font-family:var(--body);font-size:.78rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gray);cursor:pointer;user-select:none;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:color var(--t),border-color var(--t)}
-.tab:hover{color:var(--white2)}
-.tab.on{color:var(--white);border-bottom-color:var(--red)}
-.tab.on .tab-num{background:var(--red);color:var(--white)}
-.tab-num{padding:1px 7px;background:var(--border);font-family:var(--mono);font-size:.6rem;letter-spacing:1px;border-radius:1px;transition:background var(--t),color var(--t)}
+  <div class="g2 mb">
+    <div class="panel">
+      <div class="ptitle">DATABASE ANCAMAN SIBER — n = 8</div>
+      <table class="tbl">
+        <thead><tr><th>IDX</th><th>ANCAMAN</th><th>TIPE</th><th>ORIGIN</th><th>SKOR BAHAYA</th><th>LEVEL</th><th>DAMPAK</th></tr></thead>
+        <tbody id="raw-tbody"></tbody>
+      </table>
+    </div>
+    <div class="panel">
+      <div class="ptitle">FLOWCHART — SEQUENTIAL SEARCH</div>
+      <div class="fc">
+        <div class="fc-node fc-ok fc-pill">START</div>
+        <div class="fc-arr"></div>
+        <div class="fc-node fc-proc">Input: data[ ], target</div>
+        <div class="fc-arr"></div>
+        <div class="fc-node fc-proc">i ← 0 &nbsp;|&nbsp; ketemu ← False</div>
+        <div class="fc-arr"></div>
+        <div class="fc-node fc-diam">not ketemu AND i &lt; N ?</div>
+        <div class="fc-arr"></div>
+        <div class="fc-node fc-diam">data[i] == target ?</div>
+        <div class="fc-arr"></div>
+        <div class="fc-fork">
+          <div class="fc-fcol"><span class="fc-lbl">YA</span><div class="fc-node fc-ok" style="min-width:148px">ketemu ← True</div></div>
+          <div class="fc-fcol"><span class="fc-lbl">TIDAK</span><div class="fc-node fc-proc" style="min-width:148px">i ← i + 1 ↩ loop</div></div>
+        </div>
+        <div class="fc-arr"></div>
+        <div class="fc-fork">
+          <div class="fc-fcol"><div class="fc-node fc-ok"  style="min-width:138px">return i<br>(DITEMUKAN)</div></div>
+          <div class="fc-fcol"><div class="fc-node fc-err" style="min-width:138px">return −1<br>(TIDAK ADA)</div></div>
+        </div>
+        <div class="fc-arr"></div>
+        <div class="fc-node fc-ok fc-pill">END</div>
+      </div>
+    </div>
+  </div>
 
-/* MAIN */
-#main{position:relative;z-index:10;padding:32px 40px;max-width:1440px;margin:0 auto}
-.section{display:none;animation:fadeIn .25s ease}
-.section.on{display:block}
-@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  <div class="panel p-green mb">
+    <div class="ptitle g">▶ JALANKAN PENCARIAN INTERAKTIF</div>
+    <div class="inp-row">
+      <input class="inp" type="number" id="search-target" placeholder="Masukkan skor target (1–100)" value="88" min="1" max="100"/>
+      <button class="btn g" id="btn-search-run"   onclick="runSearch()">▶ EXECUTE</button>
+      <button class="btn b" id="btn-search-reset" onclick="resetSearch()">↺ RESET</button>
+    </div>
+    <div class="search-track" id="search-track"></div>
+    <div id="search-result"></div>
+    <div class="metrics" id="search-metrics"></div>
+  </div>
 
-/* SEC HEADER */
-.sec-hdr{display:flex;align-items:flex-start;gap:0;margin-bottom:32px;position:relative;padding-left:20px}
-.sec-hdr::before{content:'';position:absolute;left:0;top:4px;bottom:4px;width:3px;background:var(--red)}
-.sec-n{font-family:var(--display);font-size:5rem;line-height:1;color:var(--red);opacity:.08;min-width:80px;user-select:none;margin-right:8px}
-.sec-txt h2{font-family:var(--display);font-size:1.6rem;letter-spacing:3px;color:var(--white);line-height:1;margin-bottom:8px}
-.sec-txt h2 span{color:var(--red)}
-.sec-txt p{color:var(--white2);font-size:.82rem;line-height:1.6;max-width:700px}
-.badges{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
-.badge{padding:3px 10px;font-family:var(--mono);font-size:.62rem;letter-spacing:1px;border:1px solid currentColor;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%)}
+  <div class="panel mb">
+    <div class="ptitle">PROGRAM — PYTHON · algorithms.py</div>
+    <div class="code-wrap">
+      <div class="code-header">
+        <div class="code-dots"><span class="c-d1"></span><span class="c-d2"></span><span class="c-d3"></span></div>
+        <div class="code-fname">backend/algorithms.py · sequential_search()</div>
+      </div>
+      <div class="code-body">
+<span class="kw">import</span> time, tracemalloc<br><br>
+<span class="kw">def</span> <span class="fn">sequential_search</span>(data: list, target: <span class="cl">int</span>) -&gt; <span class="cl">dict</span>:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">"""</span><br>
+<span class="cm">    Pseudocode: i←0, ketemu←false</span><br>
+<span class="cm">    while (not ketemu) and (i&lt;N) do</span><br>
+<span class="cm">        if data[i]==target: ketemu←true</span><br>
+<span class="cm">        else: i←i+1</span><br>
+<span class="cm">    return i if ketemu else -1</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">"""</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;tracemalloc.<span class="fn">start</span>()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;t_start <span class="op">=</span> time.<span class="fn">perf_counter</span>()<br><br>
+&nbsp;&nbsp;&nbsp;&nbsp;i, ketemu <span class="op">=</span> <span class="nm">0</span>, <span class="kw">False</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">while</span> (<span class="kw">not</span> ketemu) <span class="kw">and</span> (i <span class="op">&lt;</span> <span class="fn">len</span>(data)):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">if</span> data[i] <span class="op">==</span> target: ketemu <span class="op">=</span> <span class="kw">True</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">else</span>: i <span class="op">+=</span> <span class="nm">1</span><br><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">return</span> i <span class="kw">if</span> ketemu <span class="kw">else</span> <span class="op">-</span><span class="nm">1</span>
+      </div>
+    </div>
+  </div>
 
-/* GRID */
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
-.mb{margin-bottom:16px}
-.mb2{margin-bottom:28px}
+  <div class="panel">
+    <div class="ptitle">OUTPUT — TERMINAL</div>
+    <div class="term">
+      <div class="term-hdr">⬛ PYTHON 3.12 · backend/algorithms.py</div>
+      <div class="term-body">
+        <div class="t-pr">$ python3 algorithms.py</div>
+        <div class="t-ou">  CONTOH 3 — Sequential Search</div>
+        <div class="t-ou">  Data input  : [72, 95, 48, 88, 99, 61, 35, 83]</div>
+        <div class="t-ou">  Target cari : skor 88 (Ransomware)</div>
+        <div class="t-st">  Langkah 1: data[0] = 72 ≠ 88</div>
+        <div class="t-st">  Langkah 2: data[1] = 95 ≠ 88</div>
+        <div class="t-st">  Langkah 3: data[2] = 48 ≠ 88</div>
+        <div class="t-ou" style="color:var(--green)">  Langkah 4: data[3] = 88 ✓ KETEMU!</div>
+        <div class="t-re">  ✔  Ditemukan: Ransomware (skor 88) pada indeks [3]</div>
+        <div class="t-re">  ✔  Jumlah perbandingan : 4</div>
+        <div class="t-in">  T_min(n)=1  |  T_max(n)=8  |  T_avg(n)=4.5</div>
+        <div class="t-in">  ⏱  Waktu eksekusi  : 0.019378 ms</div>
+        <div class="t-in">  💾  Memory Peak     : 0.0781 KB</div>
+        <div class="t-in">  Big-O              : O(n)</div>
+      </div>
+    </div>
+  </div>
+</div><!-- /sec0 -->
 
-/* PANEL */
-.panel{background:var(--bg2);border:1px solid var(--border);padding:22px;position:relative;overflow:hidden;clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px))}
-.panel::before{content:'';position:absolute;top:0;left:0;width:40px;height:2px;background:var(--red)}
-.panel::after{content:'';position:absolute;top:0;left:0;width:2px;height:40px;background:var(--red)}
-.panel.p-teal::before{background:var(--teal)}
-.panel.p-teal::after{background:var(--teal)}
-.panel.p-yellow::before{background:var(--yellow)}
-.panel.p-yellow::after{background:var(--yellow)}
-.panel.p-green::before{background:var(--green)}
-.panel.p-green::after{background:var(--green)}
 
-.ptitle{font-family:var(--display);font-size:.85rem;letter-spacing:3px;color:var(--white2);margin-bottom:18px;display:flex;align-items:center;gap:10px;text-transform:uppercase}
-.ptitle::before{content:'//';color:var(--red);font-family:var(--mono);font-size:.75rem}
-.ptitle.t{color:var(--teal)}
-.ptitle.t::before{color:var(--teal)}
-.ptitle.y{color:var(--yellow)}
-.ptitle.y::before{color:var(--yellow)}
-.ptitle.g{color:var(--green)}
-.ptitle.g::before{color:var(--green)}
+<!-- ══ SECTION 1 · SELECTION SORT ══ -->
+<div class="section" id="sec1">
+  <div class="sec-hdr">
+    <div class="sec-n" style="color:var(--purple)">04</div>
+    <div class="sec-txt">
+      <h2 style="color:var(--purple)">SELECTION SORT — THREAT PRIORITIZATION</h2>
+      <p>Mengurutkan ancaman dari skor terendah ke tertinggi untuk menentukan urutan prioritas respons keamanan siber.</p>
+      <div class="badges">
+        <span class="badge" style="color:var(--purple)">CMP = n(n-1)/2 = 28</span>
+        <span class="badge" style="color:var(--purple)">SWAP ≤ n-1 = 7</span>
+        <span class="badge" style="color:var(--purple)">BIG-O = O(n²)</span>
+        <span class="badge" style="color:var(--gold)">BEST = WORST (perbandingan)</span>
+      </div>
+    </div>
+  </div>
 
-/* TABLE */
-table.tbl{width:100%;border-collapse:collapse}
-table.tbl th{padding:8px 14px;text-align:left;font-family:var(--body);font-size:.68rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gray);border-bottom:1px solid var(--border);background:var(--bg3)}
-table.tbl td{padding:11px 14px;font-size:.82rem;border-bottom:1px solid var(--border);font-family:var(--body)}
-table.tbl tbody tr{transition:background var(--t)}
-table.tbl tbody tr:hover td{background:rgba(255,70,85,.04)}
-table.tbl tbody tr:last-child td{border-bottom:none}
-.tc-idx{color:var(--gray);font-family:var(--mono);font-size:.72rem}
-.tc-mono{font-family:var(--mono);font-size:.75rem}
+  <div class="g2 mb">
+    <div class="panel p-purple">
+      <div class="ptitle p">VISUALISASI ANIMASI</div>
+      <div class="sort-stage" id="sel-stage"></div>
+      <div style="display:flex;gap:2px;justify-content:center;flex-wrap:wrap;margin-top:6px" id="sel-vrow"></div>
+      <div class="pass-row" style="border-left-color:var(--purple)">
+        <div class="pass-item"><span class="pass-lbl">PASS</span><span class="pass-val" id="sel-pass" style="color:var(--purple)">0 / 7</span></div>
+        <div class="pass-item"><span class="pass-lbl">PERBANDINGAN</span><span class="pass-val" id="sel-cmp" style="color:var(--gold)">0</span></div>
+        <div class="pass-item"><span class="pass-lbl">PERTUKARAN</span><span class="pass-val" id="sel-swap" style="color:var(--green)">0</span></div>
+        <div class="pass-item"><span class="pass-lbl">FORMULA</span><span class="pass-val" style="color:var(--gray);font-size:.7rem">n(n-1)/2=28</span></div>
+      </div>
+      <div class="btn-row">
+        <button class="btn p" id="btn-sel-run"   onclick="startSelSort()">▶ JALANKAN</button>
+        <button class="btn b" id="btn-sel-reset" onclick="resetSelSort()">↺ RESET</button>
+      </div>
+    </div>
 
-.sbar-wrap{display:flex;align-items:center;gap:10px}
-.sbar{flex:1;height:4px;background:var(--bg3)}
-.sbar-fill{height:100%;transition:width 1s cubic-bezier(.4,0,.2,1)}
-.sbar-val{min-width:26px;text-align:right;font-family:var(--mono);font-size:.75rem;font-weight:500}
+    <div class="panel p-purple">
+      <div class="ptitle p">FLOWCHART — SELECTION SORT</div>
+      <div class="fc">
+        <div class="fc-node fc-ok fc-pill">START</div>
+        <div class="fc-arr"></div>
+        <div class="fc-node fc-pur">Input: data[n]</div>
+        <div class="fc-arr"></div>
+        <div class="fc-node fc-pur">i ← 1 (to n-1)</div>
+        <div class="fc-arr"></div>
+        <div class="fc-node fc-diam">i ≤ n − 1 ?</div>
+        <div class="fc-arr"></div>
+        <div class="fc-node fc-pur">imin ← i &nbsp;|&nbsp; j ← i+1</div>
+        <div class="fc-arr"></div>
+        <div class="fc-node fc-diam">j ≤ n ?</div>
+        <div class="fc-arr"></div>
+        <div class="fc-fork">
+          <div class="fc-fcol"><span class="fc-lbl">a[j] &lt; a[imin]</span><div class="fc-node fc-pur" style="min-width:142px;font-size:.67rem">imin ← j · j ← j+1</div></div>
+          <div class="fc-fcol"><span class="fc-lbl">TIDAK</span><div class="fc-node fc-pur" style="min-width:120px;font-size:.67rem">j ← j+1</div></div>
+        </div>
+        <div class="fc-arr"></div>
+        <div class="fc-node fc-ok" style="font-size:.68rem">swap(a[i], a[imin]) · i ← i+1 ↩</div>
+        <div class="fc-arr"></div>
+        <div class="fc-node fc-ok fc-pill">END · sorted[]</div>
+      </div>
+    </div>
+  </div>
 
-.lvl{padding:2px 8px;font-family:var(--body);font-size:.62rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border:1px solid currentColor;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%)}
-.lv-c{color:var(--red);background:rgba(255,70,85,.1)}
-.lv-h{color:#ff8c00;background:rgba(255,140,0,.1)}
-.lv-m{color:var(--yellow);background:rgba(245,197,24,.1)}
-.lv-l{color:var(--teal);background:rgba(0,188,212,.1)}
+  <div class="panel p-purple mb">
+    <div class="ptitle p">HASIL TERURUT — PRIORITAS RESPONS KEAMANAN</div>
+    <table class="tbl">
+      <thead><tr><th>RANK</th><th>ANCAMAN</th><th>TIPE</th><th>SKOR BAHAYA</th><th>LEVEL</th><th>PRIORITAS RESPONS</th></tr></thead>
+      <tbody id="sel-result-tbody"></tbody>
+    </table>
+  </div>
 
-/* BUTTONS */
-.btn{padding:9px 22px;border:1px solid;background:transparent;cursor:pointer;font-family:var(--body);font-size:.75rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;transition:all var(--t);user-select:none;display:inline-flex;align-items:center;gap:8px;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%)}
-.btn:active{transform:scale(.97)}
-.btn.r{border-color:var(--red);color:var(--red)}
-.btn.r:hover{background:var(--red);color:var(--white);box-shadow:var(--glow-r)}
-.btn.wh{border-color:var(--border2);color:var(--white2)}
-.btn.wh:hover{background:var(--border2);color:var(--white)}
-.btn.t{border-color:var(--teal);color:var(--teal)}
-.btn.t:hover{background:var(--teal);color:var(--bg4)}
-.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+  <div class="panel mb">
+    <div class="ptitle p">PROGRAM — PYTHON · algorithms.py</div>
+    <div class="code-wrap">
+      <div class="code-header" style="border-left-color:var(--purple)">
+        <div class="code-dots"><span class="c-d1"></span><span class="c-d2"></span><span class="c-d3"></span></div>
+        <div class="code-fname">backend/algorithms.py · selection_sort()</div>
+      </div>
+      <div class="code-body">
+<span class="kw">def</span> <span class="fn">selection_sort</span>(data_in: list):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">"""</span><br>
+<span class="cm">    for i←1 to n-1: imin←i</span><br>
+<span class="cm">        for j←i+1 to n: if a[j]&lt;a[imin]: imin←j</span><br>
+<span class="cm">        swap(a[i], a[imin])</span><br>
+<span class="cm">    Cmp: n(n-1)/2 · Swap: ≤n-1 · O(n²)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">"""</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;data <span class="op">=</span> data_in[:]; n <span class="op">=</span> <span class="fn">len</span>(data)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cmp, swap <span class="op">=</span> <span class="nm">0</span>, <span class="nm">0</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(n <span class="op">-</span> <span class="nm">1</span>):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;imin <span class="op">=</span> i<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">for</span> j <span class="kw">in</span> <span class="fn">range</span>(i <span class="op">+</span> <span class="nm">1</span>, n):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cmp <span class="op">+=</span> <span class="nm">1</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">if</span> data[j] <span class="op">&lt;</span> data[imin]: imin <span class="op">=</span> j<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">if</span> imin <span class="op">!=</span> i:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data[i], data[imin] <span class="op">=</span> data[imin], data[i]; swap <span class="op">+=</span> <span class="nm">1</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">return</span> data, cmp, swap
+      </div>
+    </div>
+  </div>
 
-/* INPUT */
-.inp{background:var(--bg4);border:1px solid var(--border2);color:var(--white);font-family:var(--mono);font-size:.85rem;padding:10px 16px;outline:none;width:100%;transition:border-color var(--t);clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%)}
-.inp:focus{border-color:var(--red)}
-.inp-row{display:flex;gap:10px;align-items:center;margin-bottom:18px}
-.inp-row .inp{flex:1}
+  <div class="panel">
+    <div class="ptitle p">OUTPUT — TERMINAL</div>
+    <div class="term">
+      <div class="term-hdr" style="border-left-color:var(--purple)">⬛ PYTHON 3.12 · SELECTION SORT</div>
+      <div class="term-body">
+        <div class="t-pr">$ python3 algorithms.py</div>
+        <div class="t-ou">  Input  : [72, 95, 48, 88, 99, 61, 35, 83]</div>
+        <div class="t-st">  Pass 1: [7 cmp | swap] → [35, 95, 48, 88, 99, 61, 72, 83]</div>
+        <div class="t-st">  Pass 2: [6 cmp | swap] → [35, 48, 95, 88, 99, 61, 72, 83]</div>
+        <div class="t-st">  Pass 3: [5 cmp | swap] → [35, 48, 61, 88, 99, 95, 72, 83]</div>
+        <div class="t-st">  Pass 4: [4 cmp | swap] → [35, 48, 61, 72, 99, 95, 88, 83]</div>
+        <div class="t-st">  Pass 5: [3 cmp | swap] → [35, 48, 61, 72, 83, 95, 88, 99]</div>
+        <div class="t-st">  Pass 6: [2 cmp | swap] → [35, 48, 61, 72, 83, 88, 95, 99]</div>
+        <div class="t-st">  Pass 7: [1 cmp | no swap] ✓</div>
+        <div class="t-re">  Output : [35, 48, 61, 72, 83, 88, 95, 99]</div>
+        <div class="t-in">  Perbandingan : 28  =  n(n-1)/2 ✓</div>
+        <div class="t-in">  Pertukaran   : 6   ≤  n-1 = 7 ✓</div>
+        <div class="t-in">  ⏱  Waktu : 0.035056 ms  |  💾 Mem Peak : 0.6875 KB</div>
+      </div>
+    </div>
+  </div>
+</div><!-- /sec1 -->
 
-/* SEARCH NODES */
-.search-track{display:flex;gap:7px;flex-wrap:wrap;margin:16px 0}
-.snode{width:68px;height:68px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px solid var(--border);background:var(--bg3);gap:2px;transition:all .22s ease;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%)}
-.snode-score{font-family:var(--mono);font-size:.92rem;font-weight:500}
-.snode-name{font-size:.5rem;color:var(--gray);text-align:center;max-width:64px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:var(--body)}
-.snode-idx{font-size:.52rem;color:var(--gray2);font-family:var(--mono)}
-.snode.check{border-color:var(--yellow);color:var(--yellow);background:rgba(245,197,24,.07);animation:nodeFlash .3s ease}
-.snode.skip{border-color:var(--border);color:var(--gray2);opacity:.4}
-.snode.found{border-color:var(--red);color:var(--red);background:rgba(255,70,85,.1);box-shadow:var(--glow-r)}
-@keyframes nodeFlash{0%{transform:scale(1)}40%{transform:scale(1.1)}100%{transform:scale(1)}}
 
-.rbox{padding:16px 20px;border:1px solid;display:flex;align-items:center;gap:15px;margin-top:12px;animation:fadeIn .2s ease}
-.rbox.ok{border-color:var(--red);background:rgba(255,70,85,.06)}
-.rbox.no{border-color:var(--border2);background:var(--bg3)}
-.rbox-icon{font-size:1.6rem;flex-shrink:0}
-.rbox-title{font-family:var(--display);font-size:.95rem;letter-spacing:2px}
-.rbox-sub{font-size:.78rem;color:var(--white2);margin-top:3px;line-height:1.5;font-family:var(--body)}
+<!-- ══ SECTION 2 · BUBBLE SORT ══ -->
+<div class="section" id="sec2">
+  <div class="sec-hdr">
+    <div class="sec-n" style="color:var(--red)">05</div>
+    <div class="sec-txt">
+      <h2 style="color:var(--red)">BUBBLE SORT — THREAT RISK RANKING</h2>
+      <p>Pengurutan gelembung: membandingkan elemen berdekatan, tukar jika salah urut. Nilai besar "mengapung" ke akhir tiap pass.</p>
+      <div class="badges">
+        <span class="badge" style="color:var(--green)">SWAP_MIN = 0</span>
+        <span class="badge" style="color:var(--red)">SWAP_MAX = n(n-1)/2</span>
+        <span class="badge" style="color:var(--red)">LEBIH BOROS SWAP vs SEL-SORT</span>
+        <span class="badge" style="color:var(--red)">BIG-O = O(n²)</span>
+      </div>
+    </div>
+  </div>
 
-.metrics{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
-.metric{flex:1;min-width:100px;background:var(--bg3);border:1px solid var(--border);padding:14px 14px;text-align:center;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%)}
-.metric-val{font-family:var(--mono);font-size:1rem;font-weight:500;color:var(--red)}
-.metric-lbl{font-size:.6rem;color:var(--gray);margin-top:4px;letter-spacing:1.5px;text-transform:uppercase;font-family:var(--body);font-weight:700}
+  <div class="g2 mb">
+    <div class="panel p-red">
+      <div class="ptitle r">VISUALISASI ANIMASI</div>
+      <div class="sort-stage" id="bub-stage"></div>
+      <div style="display:flex;gap:2px;justify-content:center;flex-wrap:wrap;margin-top:6px" id="bub-vrow"></div>
+      <div class="pass-row">
+        <div class="pass-item"><span class="pass-lbl">PASS</span><span class="pass-val" id="bub-pass" style="color:var(--red)">0 / 7</span></div>
+        <div class="pass-item"><span class="pass-lbl">PERBANDINGAN</span><span class="pass-val" id="bub-cmp" style="color:var(--gold)">0</span></div>
+        <div class="pass-item"><span class="pass-lbl">PERTUKARAN</span><span class="pass-val" id="bub-swap" style="color:var(--red)">0</span></div>
+        <div class="pass-item"><span class="pass-lbl">MAX SWAP</span><span class="pass-val" style="color:var(--gray);font-size:.7rem">n(n-1)/2=28</span></div>
+      </div>
+      <div class="btn-row">
+        <button class="btn r" id="btn-bub-run"   onclick="startBubSort()">▶ JALANKAN</button>
+        <button class="btn b" id="btn-bub-reset" onclick="resetBubSort()">↺ RESET</button>
+      </div>
+    </div>
 
-/* SORT VIZ */
-.sort-stage{height:160px;display:flex;align-items:flex-end;gap:4px;padding:0 4px}
-.sort-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
-.sort-bar{width:100%;transition:height .5s cubic-bezier(.4,0,.2,1),background .25s;min-height:4px}
-.sort-lbl{font-size:.56rem;color:var(--gray);text-align:center;font-family:var(--body);font-weight:600;letter-spacing:.5px}
-.sort-val{font-size:.65rem;font-family:var(--mono);text-align:center}
-.pass-row{display:flex;align-items:center;gap:24px;flex-wrap:wrap;background:var(--bg3);border:1px solid var(--border);border-left:3px solid var(--red);padding:10px 16px;margin:12px 0}
-.pass-item{display:flex;flex-direction:column;align-items:center}
-.pass-lbl{font-size:.6rem;color:var(--gray);letter-spacing:1.5px;text-transform:uppercase;font-family:var(--body);font-weight:700}
-.pass-val{font-family:var(--mono);font-size:.95rem;font-weight:500;color:var(--white);margin-top:3px}
+    <div class="panel p-red">
+      <div class="ptitle r">FLOWCHART — BUBBLE SORT</div>
+      <div class="fc">
+        <div class="fc-node fc-ok fc-pill">START</div>
+        <div class="fc-arr"></div>
+        <div class="fc-node fc-red">Input: data[n]</div>
+        <div class="fc-arr"></div>
+        <div class="fc-node fc-red">i ← n-1 (downto 1)</div>
+        <div class="fc-arr"></div>
+        <div class="fc-node fc-diam">i ≥ 1 ?</div>
+        <div class="fc-arr"></div>
+        <div class="fc-node fc-red">j ← 1 to i</div>
+        <div class="fc-arr"></div>
+        <div class="fc-node fc-diam">data[j] &lt; data[j-1] ?</div>
+        <div class="fc-arr"></div>
+        <div class="fc-fork">
+          <div class="fc-fcol"><span class="fc-lbl">YA</span><div class="fc-node fc-ok" style="min-width:148px;font-size:.68rem">swap(data[j], data[j-1])</div></div>
+          <div class="fc-fcol"><span class="fc-lbl">TIDAK</span><div class="fc-node fc-red" style="min-width:120px;font-size:.68rem">j ← j+1</div></div>
+        </div>
+        <div class="fc-arr"></div>
+        <div class="fc-node fc-red">i ← i-1 ↩ loop</div>
+        <div class="fc-arr"></div>
+        <div class="fc-node fc-ok fc-pill">END · sorted[]</div>
+      </div>
+    </div>
+  </div>
 
-/* FLOWCHART */
-.fc{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 0}
-.fc-node{padding:9px 18px;border:1px solid;font-size:.7rem;text-align:center;min-width:188px;letter-spacing:.5px;line-height:1.5;font-family:var(--body);font-weight:600}
-.fc-pill{clip-path:polygon(12px 0%,calc(100% - 12px) 0%,100% 50%,calc(100% - 12px) 100%,12px 100%,0% 50%)}
-.fc-proc{border-color:var(--border2);color:var(--white2);background:var(--bg3)}
-.fc-diam{min-width:220px;border-color:var(--yellow);color:var(--yellow);background:rgba(245,197,24,.04);clip-path:polygon(12px 0%,calc(100% - 12px) 0%,100% 50%,calc(100% - 12px) 100%,12px 100%,0% 50%)}
-.fc-ok{border-color:var(--red);color:var(--red);background:rgba(255,70,85,.07)}
-.fc-err{border-color:var(--gray);color:var(--gray);background:var(--bg3)}
-.fc-red{border-color:var(--red);color:var(--white2);background:rgba(255,70,85,.05)}
-.fc-pur{border-color:var(--teal);color:var(--white2);background:rgba(0,188,212,.04)}
-.fc-arr{width:1px;height:14px;background:var(--border2);position:relative;flex-shrink:0}
-.fc-arr::after{content:'';position:absolute;bottom:-5px;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--border2)}
-.fc-fork{display:flex;gap:20px;align-items:flex-start;justify-content:center}
-.fc-fcol{display:flex;flex-direction:column;align-items:center;gap:2px}
-.fc-lbl{font-size:.62rem;color:var(--yellow);letter-spacing:1px;margin-bottom:3px;font-family:var(--body);font-weight:700;text-transform:uppercase}
+  <div class="panel p-gold mb">
+    <div class="ptitle go">PERBANDINGAN — BUBBLE vs SELECTION SORT</div>
+    <table class="ctbl">
+      <thead><tr><th>METRIK</th><th>BUBBLE SORT</th><th>SELECTION SORT</th><th>KESIMPULAN</th></tr></thead>
+      <tbody>
+        <tr><td>Perbandingan</td><td style="color:var(--red);font-family:var(--display)">n(n-1)/2 = 28</td><td style="color:var(--purple);font-family:var(--display)">n(n-1)/2 = 28</td><td style="color:var(--gold)">Sama</td></tr>
+        <tr><td>Swap (best case)</td><td style="color:var(--green);font-family:var(--display)">T_min = 0</td><td style="color:var(--purple);font-family:var(--display)">n-1 = 7</td><td style="color:var(--green)">🏆 Bubble lebih baik</td></tr>
+        <tr><td>Swap (worst case)</td><td style="color:var(--red);font-family:var(--display)">n(n-1)/2 = 28</td><td style="color:var(--purple);font-family:var(--display)">n-1 = 7</td><td style="color:var(--red)">⚠ Selection lebih baik</td></tr>
+        <tr><td>Swap aktual (data ini)</td><td style="color:var(--red);font-family:var(--display)">16 swap</td><td style="color:var(--purple);font-family:var(--display)">6 swap</td><td style="color:var(--red)">⚠ Bubble 2.7× lebih boros</td></tr>
+        <tr><td>Waktu eksekusi</td><td style="font-family:var(--display)">0.023043 ms</td><td style="font-family:var(--display)">0.035056 ms</td><td style="color:var(--green)">🏆 Bubble lebih cepat</td></tr>
+      </tbody>
+    </table>
+  </div>
 
-/* CODE */
-.code-wrap{background:var(--bg4);border:1px solid var(--border);overflow:hidden}
-.code-header{background:var(--bg3);padding:8px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border);border-left:3px solid var(--red)}
-.code-dots span{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:4px}
-.c-d1{background:#ff5f57}.c-d2{background:#ffbd2e}.c-d3{background:#28c840}
-.code-fname{font-size:.7rem;color:var(--gray);margin-left:auto;letter-spacing:1px;font-family:var(--mono)}
-.code-body{padding:18px 22px;font-size:.77rem;line-height:1.9;overflow-x:auto;font-family:var(--mono)}
-.kw{color:#ff4655}.fn{color:#00bcd4}.cm{color:#5a7a8a;font-style:italic}.st{color:#5cb85c}.nm{color:#f5c518}.op{color:#ff8c00}.cl{color:#b39ddb}
+  <div class="panel mb">
+    <div class="ptitle r">PROGRAM — PYTHON · algorithms.py</div>
+    <div class="code-wrap">
+      <div class="code-header">
+        <div class="code-dots"><span class="c-d1"></span><span class="c-d2"></span><span class="c-d3"></span></div>
+        <div class="code-fname">backend/algorithms.py · bubble_sort()</div>
+      </div>
+      <div class="code-body">
+<span class="kw">def</span> <span class="fn">bubble_sort</span>(data_in: list):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">"""</span><br>
+<span class="cm">    for i←n-1 downto 1:</span><br>
+<span class="cm">        for j←1 to i:</span><br>
+<span class="cm">            if a[j]&lt;a[j-1]: swap(a[j], a[j-1])</span><br>
+<span class="cm">    Cmp: n(n-1)/2 · Swap_min=0 · Swap_max=n(n-1)/2 · O(n²)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">"""</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;data <span class="op">=</span> data_in[:]; n <span class="op">=</span> <span class="fn">len</span>(data)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cmp, swap <span class="op">=</span> <span class="nm">0</span>, <span class="nm">0</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(n <span class="op">-</span> <span class="nm">1</span>, <span class="nm">0</span>, <span class="op">-</span><span class="nm">1</span>):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">for</span> j <span class="kw">in</span> <span class="fn">range</span>(<span class="nm">1</span>, i <span class="op">+</span> <span class="nm">1</span>):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cmp <span class="op">+=</span> <span class="nm">1</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">if</span> data[j] <span class="op">&lt;</span> data[j <span class="op">-</span> <span class="nm">1</span>]:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data[j], data[j<span class="op">-</span><span class="nm">1</span>] <span class="op">=</span> data[j<span class="op">-</span><span class="nm">1</span>], data[j]; swap <span class="op">+=</span> <span class="nm">1</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">return</span> data, cmp, swap
+      </div>
+    </div>
+  </div>
 
-/* TERMINAL */
-.term{background:var(--bg4);border:1px solid var(--border);overflow:hidden}
-.term-hdr{background:var(--bg3);padding:8px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border);border-left:3px solid var(--red);font-family:var(--body);font-size:.7rem;color:var(--gray);letter-spacing:2px;text-transform:uppercase;font-weight:700}
-.term-body{padding:14px 18px;font-size:.76rem;line-height:1.85;max-height:300px;overflow-y:auto;font-family:var(--mono)}
-.t-pr{color:var(--red)}.t-ou{color:var(--white)}.t-re{color:var(--yellow)}.t-in{color:var(--teal)}.t-wa{color:#ff8c00}.t-st{color:var(--gray)}
+  <div class="panel">
+    <div class="ptitle r">OUTPUT — TERMINAL</div>
+    <div class="term">
+      <div class="term-hdr">⬛ PYTHON 3.12 · BUBBLE SORT</div>
+      <div class="term-body">
+        <div class="t-pr">$ python3 algorithms.py</div>
+        <div class="t-ou">  Input  : [72, 95, 48, 88, 99, 61, 35, 83]</div>
+        <div class="t-st">  Pass 1 (i=7): 7 cmp | 5 swap → [72, 48, 88, 95, 61, 35, 83, 99]</div>
+        <div class="t-st">  Pass 2 (i=6): 6 cmp | 4 swap → [48, 72, 88, 61, 35, 83, 95, 99]</div>
+        <div class="t-st">  Pass 3 (i=5): 5 cmp | 3 swap → [48, 72, 61, 35, 83, 88, 95, 99]</div>
+        <div class="t-st">  Pass 4 (i=4): 4 cmp | 2 swap → [48, 61, 35, 72, 83, 88, 95, 99]</div>
+        <div class="t-st">  Pass 5 (i=3): 3 cmp | 1 swap → [48, 35, 61, 72, 83, 88, 95, 99]</div>
+        <div class="t-st">  Pass 6 (i=2): 2 cmp | 1 swap → [35, 48, 61, 72, 83, 88, 95, 99]</div>
+        <div class="t-st">  Pass 7 (i=1): 1 cmp | 0 swap ✓</div>
+        <div class="t-re">  Output : [35, 48, 61, 72, 83, 88, 95, 99]</div>
+        <div class="t-wa">  Pertukaran   : 16  ← Selection Sort hanya 6! (2.7× lebih boros)</div>
+        <div class="t-in">  ⏱  Waktu : 0.023043 ms  |  💾 Mem Peak : 0.6875 KB</div>
+      </div>
+    </div>
+  </div>
+</div><!-- /sec2 -->
 
-/* CTBL */
-table.ctbl{width:100%;border-collapse:collapse}
-table.ctbl th{padding:10px 15px;text-align:left;font-family:var(--body);font-size:.65rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gray);border-bottom:1px solid var(--border);background:var(--bg3)}
-table.ctbl td{padding:12px 15px;font-size:.8rem;border-bottom:1px solid var(--border);font-family:var(--body)}
-table.ctbl tbody tr:hover td{background:rgba(255,70,85,.03)}
-table.ctbl tbody tr:last-child td{border-bottom:none}
 
-/* CHART */
-.chart-wrap{position:relative}
-canvas{display:block;width:100%!important}
+<!-- ══ SECTION 3 · SUMMARY ══ -->
+<div class="section" id="sec3">
+  <div class="sec-hdr">
+    <div class="sec-n" style="color:var(--gold)">∑</div>
+    <div class="sec-txt">
+      <h2 style="color:var(--gold)">SUMMARY — KOMPLEKSITAS WAKTU &amp; MEMORI</h2>
+      <p>Perbandingan ketiga algoritma · n = 8 data ancaman siber · Diukur dengan Python tracemalloc &amp; perf_counter</p>
+    </div>
+  </div>
 
-/* FCARD */
-.fcard{background:var(--bg3);border:1px solid var(--border);border-left:3px solid var(--red);padding:20px;text-align:center}
-.fcard-big{font-family:var(--mono);font-size:1rem;font-weight:500;margin:8px 0;line-height:1.7}
-.fcard-sub{font-size:.7rem;color:var(--gray);letter-spacing:1px;margin-top:5px;text-transform:uppercase;font-family:var(--body);font-weight:700}
+  <div class="panel p-gold mb">
+    <div class="ptitle go">TABEL KOMPLEKSITAS LENGKAP</div>
+    <table class="ctbl">
+      <thead><tr><th>ALGORITMA</th><th>T_MIN</th><th>T_MAX</th><th>CMP AKTUAL</th><th>SWAP AKTUAL</th><th>TIME (ms)</th><th>MEM PEAK (KB)</th><th>BIG-O</th></tr></thead>
+      <tbody>
+        <tr>
+          <td style="color:var(--blue);font-family:var(--display)">Sequential Search</td>
+          <td style="color:var(--green);font-family:var(--display)">1</td>
+          <td style="color:var(--red);font-family:var(--display)">n = 8</td>
+          <td style="font-family:var(--display)">4</td>
+          <td style="color:var(--gray)">—</td>
+          <td style="color:var(--green);font-family:var(--display)">0.019378</td>
+          <td style="color:var(--green);font-family:var(--display)">0.0781</td>
+          <td style="color:var(--blue);font-family:var(--display)">O(n)</td>
+        </tr>
+        <tr>
+          <td style="color:var(--purple);font-family:var(--display)">Selection Sort</td>
+          <td style="color:var(--purple);font-family:var(--display)">n(n-1)/2</td>
+          <td style="color:var(--purple);font-family:var(--display)">n(n-1)/2</td>
+          <td style="font-family:var(--display)">28</td>
+          <td style="color:var(--green);font-family:var(--display)">6</td>
+          <td style="color:var(--red);font-family:var(--display)">0.035056</td>
+          <td style="font-family:var(--display)">0.6875</td>
+          <td style="color:var(--purple);font-family:var(--display)">O(n²)</td>
+        </tr>
+        <tr>
+          <td style="color:var(--red);font-family:var(--display)">Bubble Sort</td>
+          <td style="color:var(--green);font-family:var(--display)">0 swap</td>
+          <td style="color:var(--red);font-family:var(--display)">n(n-1)/2</td>
+          <td style="font-family:var(--display)">28</td>
+          <td style="color:var(--red);font-family:var(--display)">16</td>
+          <td style="font-family:var(--display)">0.023043</td>
+          <td style="font-family:var(--display)">0.6875</td>
+          <td style="color:var(--red);font-family:var(--display)">O(n²)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-/* FOOTER */
-#footer{position:relative;z-index:10;border-top:1px solid var(--border);padding:18px 40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;background:var(--bg4)}
-#footer::before{content:'';position:absolute;top:0;left:0;width:80px;height:2px;background:var(--red)}
-.foot-l{font-size:.7rem;color:var(--gray);letter-spacing:1px;font-family:var(--body)}
-.foot-r{font-size:.7rem;color:var(--gray);font-family:var(--body)}
-.foot-a{color:var(--red);text-decoration:none}
-.foot-a:hover{text-decoration:underline}
+  <div class="g2 mb">
+    <div class="panel"><div class="ptitle go">WAKTU EKSEKUSI (ms)</div><div class="chart-wrap"><canvas id="chart-time" height="230"></canvas></div></div>
+    <div class="panel"><div class="ptitle go">MEMORY PEAK (KB)</div><div class="chart-wrap"><canvas id="chart-mem" height="230"></canvas></div></div>
+  </div>
 
-@media(max-width:1080px){.g2,.g3{grid-template-columns:1fr}}
-@media(max-width:720px){#header,#main,#footer{padding-left:16px;padding-right:16px}#tabs{padding:0 16px}.hdr-title{font-size:1.2rem}.snode{width:54px;height:54px}.sec-n{font-size:3.5rem;min-width:60px}}
+  <div class="g3 mb">
+    <div class="panel">
+      <div class="ptitle">SEQUENTIAL SEARCH</div>
+      <div class="fcard">
+        <div class="fcard-big" style="color:var(--green)">T_min = 1</div>
+        <div class="fcard-big" style="color:var(--red)">T_max = n</div>
+        <div class="fcard-big" style="color:var(--gold)">T_avg = (n+1)/2</div>
+        <div class="fcard-sub">Big-O: <span style="color:var(--blue)">O(n)</span></div>
+      </div>
+    </div>
+    <div class="panel p-purple">
+      <div class="ptitle p">SELECTION SORT</div>
+      <div class="fcard">
+        <div class="fcard-big" style="color:var(--purple)">Cmp = n(n-1)/2</div>
+        <div class="fcard-big" style="color:var(--purple)">Swap ≤ n-1</div>
+        <div class="fcard-big" style="color:var(--gold)">Best = Worst</div>
+        <div class="fcard-sub">Big-O: <span style="color:var(--purple)">O(n²)</span></div>
+      </div>
+    </div>
+    <div class="panel p-red">
+      <div class="ptitle r">BUBBLE SORT</div>
+      <div class="fcard">
+        <div class="fcard-big" style="color:var(--green)">Swap_min = 0</div>
+        <div class="fcard-big" style="color:var(--red)">Swap_max = n(n-1)/2</div>
+        <div class="fcard-big" style="color:var(--red)">Boros Swap!</div>
+        <div class="fcard-sub">Big-O: <span style="color:var(--red)">O(n²)</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel p-cyan">
+    <div class="ptitle cy">KESIMPULAN AKHIR</div>
+    <table class="ctbl">
+      <thead><tr><th>ASPEK</th><th>PALING EFISIEN</th><th>CATATAN</th></tr></thead>
+      <tbody>
+        <tr><td>Waktu eksekusi tercepat</td><td style="color:var(--blue)">Sequential Search (0.019 ms)</td><td style="color:var(--gray)">Hanya 4 langkah (target di indeks 3)</td></tr>
+        <tr><td>Jumlah swap terkecil</td><td style="color:var(--purple)">Selection Sort (6 swap)</td><td style="color:var(--gray)">Selalu ≤ n-1 pertukaran</td></tr>
+        <tr><td>Memory paling hemat</td><td style="color:var(--blue)">Sequential Search (0.078 KB)</td><td style="color:var(--gray)">Tidak perlu array tambahan</td></tr>
+        <tr><td>Kompleksitas terendah</td><td style="color:var(--blue)">Sequential Search — O(n)</td><td style="color:var(--gray)">Kedua sort sama-sama O(n²)</td></tr>
+        <tr><td>Bubble vs Selection (swap)</td><td style="color:var(--purple)">Selection Sort (6 &lt;&lt; 16)</td><td style="color:var(--red)">Bubble 2.7× lebih boros pertukaran</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- /sec3 -->
+
+</div><!-- /#main -->
+
+<footer id="footer">
+  <div class="foot-l">
+    Universitas Binaniaga Indonesia (UNBIN) &nbsp;·&nbsp;
+    Algoritma &amp; Kompleksitas — 3 SKS &nbsp;·&nbsp;
+    Dosen: <b style="color:var(--white)">Lis Utari</b>
+  </div>
+  <div class="foot-r">
+    Tema: Cyber Security Defense System &nbsp;·&nbsp;
+    Backend: Python 3
+  </div>
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+</html>
